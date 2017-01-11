@@ -68,14 +68,51 @@ class Blackjack
   end
 end  
 
+puts "Welcome to this jank game of Blackjack, would you like to play? Y or N"
+answer = gets.chomp
+if answer == y
+  then player.new_game
+else break
+end
 
-if dealers_hand == 21
-then puts "Sorry, you lose. The dealer has 21."
+if players.hand < 17 && dealers.hand > 17
+  then 
+  puts "Would you like another card? Y or N"
+  another = gets.chomp
+  if another == y
+    then player.hit
+  else puts "Ok you stay. The dealer has #{dealer.hand_value}"
+
+
+
+if dealers.hand && players.hand == 21
+  then 
+  puts "Draw. You both got 21."
+end
+
+if dealers_hand == 21 && players_hand != 21
+  then puts "Sorry, you lose. The dealer has 21."
+end
 
 if dealers_hand == 17
-then puts "The dealer has 17. Dealer holds."
+  then puts "The dealer has 17. Dealer holds."
+end
 
 if dealers_hand > 21
-then puts "The dealers hand is over 21, the dealer busts."
+  then puts "The dealers hand is over 21, the dealer busts."
+end
 
+if players_hand == 21 && dealers_hand != 21
+  then puts "You got 21! You win!"
+end
 
+if players_hand == 17
+  then puts "The dealer has 17. Dealer holds."
+end
+
+if players_hand > 21
+  then puts "You bust! You lose!"
+end
+
+new_game.new
+end

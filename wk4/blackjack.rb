@@ -73,6 +73,9 @@ class Blackjack
       if @dealer.bust? || @player.diff < @dealer.diff
         print_full
         puts "You win!"
+      elsif @player.diff > @dealer.diff
+        print_full
+        puts "You lose!"
       else
         print_full
         puts "You tied!"

@@ -41,7 +41,8 @@ class Dealer < Player
       'h'
     else
       's'
-    end    
+    end
+    puts "Dealer's turn.."   
   end
 
   def to_s
@@ -124,7 +125,7 @@ play = 'y'
 while play == 'y'
   game = Blackjack.new
   game.play
-  puts "Play again? (y/n)"
+  puts "Would you like to play again? (y/n)"
   play = gets.chomp
 end
 

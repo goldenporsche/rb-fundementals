@@ -24,7 +24,7 @@ class Game
   end
 
   def play
-    puts "What do you want to guess? (gender, skin_color, hair_color, eye_color)"
+    puts "What do you want to guess? (name, gender, skin_color, hair_color, eye_color)"
     input = gets.chomp
     case input
       when "gender"
@@ -39,6 +39,9 @@ class Game
       when "eye_color"
         puts "green, brown, blue"
         type = "eye"
+      when "name"
+        puts "rachel, mac, nick, angie, theo, joshua, emily, jason, john, grace, john, jake, megan, ryan, brandon, beth, diane, chris, david, michelle, tyson, ursula"
+        type = "name"
     end
 
     guess = gets.chomp
@@ -46,7 +49,8 @@ class Game
     puts "Remaining Suspects:"
     puts suspects.join("\n\n")
     play
-    guess_secret
+    suspects.guess_secret
+    puts @suspects.length
   
 end
 
@@ -65,8 +69,8 @@ end
     end
   end
 
-  def guess_secret
-    if @suspects.length < 5
+  def guess_secret(suspects)
+    if @suspects.count < 5
     then puts "Would you like to take a guess? Yes or No"
     guess = gets.chomp
       if guess == yes

@@ -45,6 +45,8 @@ class Game
     remove_suspects(type, guess)
     puts "Remaining Suspects:"
     puts suspects.join("\n\n")
+    play
+    guess_secret
   
 end
 
@@ -62,6 +64,21 @@ end
       end
     end
   end
+
+  def guess_secret
+    if @suspects.length < 5
+    then puts "Would you like to take a guess? Yes or No"
+    guess = gets.chomp
+      if guess == yes
+      then puts "Guess their name."
+      guess_name = gets.chomp
+      else play  
+    end
+  end
+end
+
+
+
 
   private
 

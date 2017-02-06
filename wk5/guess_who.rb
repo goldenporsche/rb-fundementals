@@ -17,15 +17,22 @@ end
 
 class Game
   attr_reader :suspects
+  HAIR_COLOR = [:pink, :blue]
 
   def initialize
     @suspects = get_suspects
     @secret = @suspects.shuffle!.first
+    @name = false
+    @guesses = 3
   end
 
   def play
-    puts "What do you want to guess? (name, gender, skin_color, hair_color, eye_color)"
-    input = gets.chomp
+    if @name
+      input = "name"
+    else
+      puts "What do you want to guess? (gender, skin_color, hair_color, eye_color)"
+      input = gets.chomp
+    end
     case input
       when "gender"
         puts "girl or boy?"
@@ -38,23 +45,31 @@ class Game
         type = "hair"
       when "eye_color"
         puts "green, brown, blue"
-        type = "eye"
+        type = "eye"  
       when "name"
-        puts "rachel, mac, nick, angie, theo, joshua, emily, jason, john, grace, john, jake, megan, ryan, brandon, beth, diane, chris, david, michelle, tyson, ursula"
+        puts @suspects.map{ |suspect| suspect.name }.join(", ")
         type = "name"
     end
 
     guess = gets.chomp
-    remove_suspects(type, guess)
+    match = check_guess(type, guess)
     puts "Remaining Suspects:"
     puts suspects.join("\n\n")
-    play
-    suspects.guess_secret
-    puts @suspects.length
-  
-end
+    if type == "name" && match
+      puts "You win!"
+    elsif @suspects.length < 5 && @guesses > 0
+      @guesses = @guesses - 1
+      @name = true 
+      puts "Try to guess the suspects name."
+      play
+    elsif @guesses == 0 
+      puts "Sorry, you lost."
+    else
+      play
+    end
+  end
 
-  def remove_suspects(type, guess)
+  def check_guess(type, guess)
     method = type.to_sym
     match = false
     if @secret.send(method) == guess
@@ -67,22 +82,8 @@ end
           match && true
       end
     end
+    match
   end
-
-  def guess_secret(suspects)
-    if @suspects.count < 5
-    then puts "Would you like to take a guess? Yes or No"
-    guess = gets.chomp
-      if guess == yes
-      then puts "Guess their name."
-      guess_name = gets.chomp
-      else play  
-    end
-  end
-end
-
-
-
 
   private
 
@@ -94,7 +95,6 @@ end
     end
     suspects
   end
-
 end
 
 g = Game.new
